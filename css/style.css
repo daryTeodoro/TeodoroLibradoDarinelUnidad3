@@ -43,6 +43,21 @@ body::-webkit-scrollbar { /* CSS scrollbar del body*/
 	display: grid;
 }
 
+.po{
+    display: grid;
+    grid-template-columns: 10% 90%;
+    cursor: pointer;
+    color: #ffffff;
+}.po:hover{
+    background-color: #e4eaf8;
+    color: #000000;
+}
+/**Iconos**/
+.io{
+    width: 100%;
+    height: 100%;
+}
+
 
 
 /**** ALINEACIONES ****/
