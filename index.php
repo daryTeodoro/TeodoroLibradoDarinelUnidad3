@@ -7,6 +7,8 @@
 	<title>MEXICO ES MAGICO</title>
 	<!--Boostrap-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<!--JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<!--ESTILOS GENERALES-->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<!--ESTILOS PROPIOS-->
@@ -282,11 +284,11 @@
 </div>
 <!--VIDEO PROMOCIONAL-->
 <div id="video-container">
-    <video autoplay loop>
+    <video autoplay loop muted>
       <source src="img/mexicomagico.mp4" type="video/mp4">
       <!-- Puedes agregar más fuentes de video para compatibilidad con diferentes navegadores -->
     </video>
-  </div>
+</div>
 <!--MAPA DEL SITIO-->
 <div style="padding: 30px 20px;background-color: #000000;color:#ffffff;" align="center">
 	<h2 class="ft mb-3">Mapa del Sitio</h2>

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,7 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="img/favicon.png" alt="favicon">
     <title>MEXICO ES MAGICO</title>
+    <!--Boostrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!--JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!--ESTILOS GENERALES-->
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <style type="text/css">
@@ -39,6 +45,14 @@
           background-color: #8797ff;
           border-radius: 10px;
       }
+
+      .card{
+        cursor: pointer;
+      }
+
+      .cg-s{
+        grid-template-columns: 60% 40%;
+      }
     </style>
   </head>
   <body>
@@ -60,17 +74,34 @@
 
         <div class="cg cg-c" align="center">
           <div class="at mb-4">
-            <div class="card bg-dark text-white fst" style="width: 18rem;">
-              <img src="https://www.cloudcenterandalucia.es/wp-content/uploads/2021/08/Cloud-Center-Andaluc%C3%ADa_Soporte-T%C3%A9cnico.png" class="card-img-top" alt="Taxco" style="height: 12rem;">
+            <div class="card bg-dark text-white fst" style="width: 18rem;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <img src="https://www.cloudcenterandalucia.es/wp-content/uploads/2021/08/Cloud-Center-Andaluc%C3%ADa_Soporte-T%C3%A9cnico.png" class="card-img-top" alt="Soporte" style="height: 12rem;">
               <div class="card-body">
                 <h4 class="card-text">Soporte</h4>
               </div>
             </div>
           </div>
 
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header bg-dark text-white" data-bs-theme="dark">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Solicitudes</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <?php include('Procesos/chats.php'); ?>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
           <div class="at mb-4">
             <div class="card bg-dark text-white fst" style="width: 18rem;">
-              <img src="https://img.freepik.com/fotos-premium/cuatro-estrellas-azul_72104-1337.jpg" class="card-img-top" alt="Taxco" style="height: 12rem;">
+              <img src="https://img.freepik.com/fotos-premium/cuatro-estrellas-azul_72104-1337.jpg" class="card-img-top" alt="Eventos" style="height: 12rem;">
               <div class="card-body">
                 <h4 class="card-text">Eventos</h4>
               </div>
@@ -79,7 +110,7 @@
 
           <div class="at mb-4">
             <div class="card bg-dark text-white fst" style="width: 18rem;">
-              <img src="https://relevantmkt.com/wp-content/uploads/tipos-eventos-marketing.jpg" class="card-img-top" alt="Taxco" style="height: 12rem;">
+              <img src="https://relevantmkt.com/wp-content/uploads/tipos-eventos-marketing.jpg" class="card-img-top" alt="Secciones" style="height: 12rem;">
               <div class="card-body">
                 <h4 class="card-text">Secciones</h4>
               </div>
@@ -124,3 +155,10 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
 </html>
+
+<?php
+if (isset($_POST['atender'])) {
+  $_SESSION['idchat'] = $_POST['atender'];
+  echo'<script>window.location.href="response.php"</script>';
+}
+?>
