@@ -1,5 +1,7 @@
 <?php
 session_start();
+//$Cuenta = $_SESSION['usuario'];
+$Cuenta = 1;
 ?>
 <!doctype html>
 <html lang="en">
@@ -160,5 +162,10 @@ session_start();
 if (isset($_POST['atender'])) {
   $_SESSION['idchat'] = $_POST['atender'];
   echo'<script>window.location.href="response.php"</script>';
+}
+
+if (isset($_POST['exit'])) {
+  session_destroy();
+  echo'<script>window.location.href="forms.php"</script>';
 }
 ?>

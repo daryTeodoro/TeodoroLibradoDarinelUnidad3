@@ -1,3 +1,7 @@
+<?php
+session_start();
+$estado = $_SESSION['idstate'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,12 +40,11 @@
 	<?php
 	    include('Procesos/funciones.php');
 
-	    $Id = 1;
-	    $estado = consultarestado($Id);
+	    $consultaEstado = consultarestado($estado);
 
 	    echo'<div id="video-container">
 			<video autoplay loop muted>
-		        <source src="'. $estado['video'] .'" type="video/mp4">
+		        <source src="'. $consultaEstado['video'] .'" type="video/mp4">
 			</video>
 		</div>';
 	?>
