@@ -4,8 +4,7 @@
 
 
 
-
-session_start();
+include('conexion.php');
 require_once "funciones.php";
 
 $C_Nombre = $_POST['Nombre'];
@@ -29,7 +28,7 @@ if ($Crear) {
 		    $Registrar = registrarUsuario($C_Nombre,$C_Correo,$C_Telefono,$C_Contrasena,$C_Rol);
 
 		    if ($Registrar == 1) {
-		        $_SESSION['Usuario'] = $C_Correo;
+		        $_SESSION['Cuenta'] = $C_Correo;
 		        $response = 1;
 		    } else {
 		        $response = 3;

@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('conexion.php');
 require_once "funciones.php";
 
 $L_Correo = $_POST['Correo'];
@@ -12,7 +12,7 @@ if ($Loguear) {
     $Contrasena = $Loguear['password_user'];
 
     if ($Contrasena == $L_Contrasena) {
-        $_SESSION['Usuario'] = $L_Correo;
+        $_SESSION['Cuenta'] = $L_Correo;
         $response = $Loguear['rol'];
     } else {
         $response = 4;
