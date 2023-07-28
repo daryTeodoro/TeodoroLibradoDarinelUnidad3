@@ -125,7 +125,7 @@ session_start();
             <input type="password"  id="L-Password" class="CampoFormulario"  placeholder="Ingresa tu Contraseña">
             <!--Boton para Ejecutar-->
             <div>
-                <button type="sumbit" class="boton-continue">Iniciar Sesion</button>
+                <button type="sumbit" class="boton-continue" >Iniciar Sesion</button>
             </div><br>
             <!--Opcion para cambiar a formulario de registro-->
             <div class="change-view fp" id="cambiar-vista">
@@ -153,6 +153,8 @@ session_start();
 	            <input type="text"  id="RU-Nombre" class="CampoFormulario"  placeholder="Ingresa tu Nombre" autocomplete="off">
 	            <input type="number"  id="RU-Telefono" class="CampoFormulario"  placeholder="Ingresa un Telefono" autocomplete="off">
 	            <input type="password" id="RU-Password" class="CampoFormulario"  placeholder="Ingresa una Contraseña">
+	            <input type="password" id="RU-Confirmar" class="CampoFormulario"  placeholder="Confirme la contraseña">
+
 
 
 	            <!--Boton para Ejecutar-->
@@ -168,6 +170,8 @@ session_start();
 	            <input type="text"  id="RE-Nombre" class="CampoFormulario"  placeholder="Ingrese el Nombre de la Empresa" autocomplete="off">
 	            <input type="number"  id="RE-Telefono" class="CampoFormulario"  placeholder="Ingrese un Telefono" autocomplete="off">
 	            <input type="password" id="RE-Password" class="CampoFormulario"  placeholder="Ingrese una Contraseña">
+	            <input type="password" id="RE-Confirmar" class="CampoFormulario"  placeholder="Confirme la contraseña">
+
 
 
 
@@ -194,7 +198,7 @@ session_start();
         <form method="post" action="" class="L-R" id="recuperarContraForm">
             <div class="fo" style="font-size: 2rem; margin: 10px 0px;"><b>Recuperar Contraseña</b></div>
             <!--Campos del formulario-->
-			<input type="e-mail"  id="" class="CampoFormulario"  placeholder="Ingresa tu Correo" autocomplete="off">
+			<input type="e-mail"  id="Recuperar_Correo" class="CampoFormulario"  placeholder="Ingresa tu Correo" autocomplete="off">
 
             
             <!--Boton para Ejecutar-->
@@ -267,6 +271,26 @@ session_start();
 
  <!--Ejecuciones-->
 <script type="text/javascript">
+function Limpiar_Registro(){
+			$('#RU-Nombre').val('');
+            $('#RU-Correo').val('');
+            $('#RU-Telefono').val('');
+            $('#RU-Password').val('');
+}
+
+function Limpiar_Registro_Empresa(){
+			$('#RE-Nombre').val('');
+            $('#RE-Correo').val('');
+            $('#RE-Telefono').val('');
+            $('#RE-Password').val('');
+}
+
+function Limpiar_Login(){
+			 $('#L-Nombre').val('');
+             $('#L-Password').val('');
+}
+
+
 
 $(document).ready(function() {
 
@@ -277,38 +301,47 @@ $(document).ready(function() {
 
             var Correo = $('#L-Correo').val();
             var Contrasena = $('#L-Password').val();
+			let emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+			// Alertas Login
 
-            // Realizar la petición AJAX
-            $.ajax({
-                type: 'POST',
-                url: 'Procesos/loguear.php', // Archivo PHP para procesar los datos en el servidor
-                data: { Psw: Contrasena, Correo: Correo }, // Se envia el dato
-                success: function(response) {
-                    // Manejar la respuesta del servidor aquí
-                    if (response == 1) {
-                    		 $('#L-Nombre').val('');
-                             $('#L-Password').val('');
-                        window.location.href = "inicioModerador.php";
-                    } else if (response == 2) {
-                    		 $('#L-Nombre').val('');
-                             $('#L-Password').val('');
-                        window.location.href = "inicioUser.php";
-                    } else if (response == 3) {
-                    		 $('#L-Nombre').val('');
-                             $('#L-Password').val('');
-                        window.location.href = "inicioEmpresa.php";
-                    }else if (response == 4) {
-                    		 $('#L-Nombre').val('');
-                             $('#L-Password').val('');
-                        mensajeError("Acceso Denegado", "El correo/contraseña es incorrecto");
-                    } else {
-                    		 $('#L-Nombre').val('');
-                             $('#L-Password').val('');
-                        mensajeError("Error en el Proceso", "Intente nuevamente");
-                    }
+			        if ($("#L-Correo").val() == "" || !emailreg.test($("#L-Correo").val())) {
+			            campoInvalido('Campo Invalido','El correo esta vacio o el formato es incorrecto');
+			            return false;
+			        } else if($("#L-Password").val() == ""){
+			            campoInvalido('Campo Vacio','La contraseña esta vacia');
+			            return false; 
+			    	} else {
+			    		// Realizar la petición AJAX
+				            $.ajax({
+				                type: 'POST',
+				                url: 'Procesos/loguear.php', // Archivo PHP para procesar los datos en el servidor
+				                data: { Psw: Contrasena, Correo: Correo }, // Se envia el dato
+				                success: function(response) {
+				                    // Manejar la respuesta del servidor aquí
+				                    if (response == 1) {
+				                    	Limpiar_Login();
+				                        window.location.href = "inicioModerador.php";
+				                    } else if (response == 2) {
+				                    	Limpiar_Login();
+				                        window.location.href = "inicioUser.php";
+				                    } else if (response == 3) {
+				                    	Limpiar_Login();
+				                        window.location.href = "inicioEmpresa.php";
+				                    }else if (response == 4) {
+				                        mensajeError("Acceso Denegado", "El correo/contraseña es incorrecto");
+				                    } else {
+				                    		
+				                        mensajeError("Error en el Proceso", "Intente nuevamente");
+				                    }
 
-                }
-            });
+				                }
+				            });
+
+			    	}
+
+			
+
+            
         });
 
 
@@ -319,44 +352,51 @@ $(document).ready(function() {
 
 	            var Nombre = $('#RU-Nombre').val();
 	            var Correo = $('#RU-Correo').val();
-	            var Contrasena = $('#RU-Telefono').val();
-	            var Telefono = $('#RU-Password').val();
+	            var Contrasena = $('#RU-Password').val();
+	            var Telefono = $('#RU-Telefono').val();
 
+				let emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+    			let telreg = /^\d{10}$/;
 
-	            // Realizar la petición AJAX
-	            $.ajax({
-	                type: 'POST',
-	                url: 'Procesos/registrar.php', // Archivo PHP para procesar los datos en el servidor
-	                data: { Correo: Correo, Telefono: Telefono, Psw: Contrasena, Nombre: Nombre, Rol: 1 }, // Se envia el dato
-	                success: function(response) {
-	                    // Manejar la respuesta del servidor aquí
-	                    if (response == 1) {
-	                    	 $('#Ru-Nombre').val('');
-                             $('#Ru-Correo').val('');
-                             $('#Ru-Telefono').val('');
-                             $('#Ru-Password').val('');
-	                        window.location.href = "inicioUser.php";
-	                    } else if (response == 2) {
-	                    	 $('#Ru-Nombre').val('');
-                             $('#Ru-Correo').val('');
-                             $('#Ru-Telefono').val('');
-                             $('#Ru-Password').val('');
-	                        campoInvalido("Correo Invalido", "El correo ya esta registrado");
-	                    } else if (response == 4) {
-	                    	 $('#Ru-Nombre').val('');
-                             $('#Ru-Correo').val('');
-                             $('#Ru-Telefono').val('');
-                             $('#Ru-Password').val('');
-	                        campoInvalido("Telefono Invalido", "El telefono ya esta registrado");
-	                    } else {
-	                    	 $('#Ru-Nombre').val('');
-                             $('#Ru-Correo').val('');
-                             $('#Ru-Telefono').val('');
-                             $('#Ru-Password').val('');
-	                        mensajeError("Error en el Proceso", "Intente nuevamente");
-	                    }
-	                }
-	            });
+						if ($("#RU-Correo").val() == "" || !emailreg.test($("#RU-Correo").val())) {
+					            campoInvalido('Campo Invalido','El correo esta vacio o el formato es incorrecto');
+					            return false;
+					    } else if ($("#RU-Nombre").val() == "") {
+				            campoInvalido('Campo Vacio','El nombre esta vacio')
+				            return false; 
+				        } else if ($("#RU-Telefono").val() == "" || !telreg.test($("#RU-Telefono").val())) {
+					            campoInvalido('Campo Invalido','El telefono esta vacio o el formato es incorrecto');
+					            return false;
+					    } else if ($("#RU-Password").val() == "") {
+				            campoInvalido('Campo Vacio','La contraseña esta vacia')
+				            return false; 
+				        } else if  ($("#RU-Confirmar").val() != $("#RU-Password").val()) {
+				            campoInvalido('Campo Invalido','Las contraseñas deben coincidir')
+				            return false; 
+				        }
+
+				        else{
+				            // Realizar la petición AJAX
+				            $.ajax({
+				                type: 'POST',
+				                url: 'Procesos/registrar.php', // Archivo PHP para procesar los datos en el servidor
+				                data: { Correo: Correo, Telefono: Telefono, Psw: Contrasena, Nombre: Nombre, Rol: 1 }, // Se envia el dato
+				                success: function(response) {
+				                    // Manejar la respuesta del servidor aquí
+				                    if (response == 1) {
+				                    	Limpiar_Registro();
+				                        window.location.href = "inicioUser.php";
+				                    } else if (response == 2) {
+				                    	campoInvalido("Telefono Invalido", "El correo ya esta registrado");
+				                    } else if (response == 4) {
+				                        campoInvalido("Telefono Invalido", "El telefono ya esta registrado");
+				                    } else {
+				                    	
+				                        mensajeError("Error en el Proceso", "Intente nuevamente");
+				                    }
+				                }
+				            });
+	            		}
 	});
 
 
@@ -369,104 +409,103 @@ $(document).ready(function() {
 
 	            var Nombre = $('#RE-Nombre').val();
 	            var Correo = $('#RE-Correo').val();
-	            var Contrasena = $('#RE-Telefono').val();
-	            var Telefono = $('#RE-Password').val();
+	            var Contrasena = $('#RE-Password ').val();
+	            var Telefono = $('#RE-Telefono').val();
+	            let emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+    			let telreg = /^\d{10}$/;
 
 
-	            // Realizar la petición AJAX
-	            $.ajax({
-	                type: 'POST',
-	                url: 'Procesos/registrar.php', // Archivo PHP para procesar los datos en el servidor
-	                data: { Correo: Correo, Telefono: Telefono, Psw: Contrasena, Nombre: Nombre, Rol: 2 }, // Se envia el dato
-	                success: function(response) {
-	                    // Manejar la respuesta del servidor aquí
-	                    if (response == 1) {
-	                    	 $('#RE-Nombre').val('');
-                             $('#RE-Correo').val('');
-                             $('#RE-Telefono').val('');
-                             $('#RE-Password').val('');
 
-	                        window.location.href = "inicioEmpresa.php";
-	                    } else if (response == 2) {
-	                    	$('#RE-Nombre').val('');
-                             $('#RE-Correo').val('');
-                             $('#RE-Telefono').val('');
-                             $('#RE-Password').val('');
-	                        campoInvalido("Correo Invalido", "El correo ya esta registrado");
-	                    } else {
-	                    	$('#RE-Nombre').val('');
-                             $('#RE-Correo').val('');
-                             $('#RE-Telefono').val('');
-                             $('#RE-Password').val('');
-	                        mensajeError("Error en el Proceso", "Intente nuevamente");
-	                    }
-	                }
-	            });
+		            		if ($("#RE-Correo").val() == "" || !emailreg.test($("#RE-Correo").val())) {
+						            campoInvalido('Campo Invalido','El correo esta vacio o el formato es incorrecto');
+						            return false;
+						    } else if ($("#RE-Nombre").val() == "") {
+					            campoInvalido('Campo Vacio','El nombre esta vacio');
+					            return false; 
+					        } else if ($("#RE-Telefono").val() == "" || !telreg.test($("#RE-Telefono").val())) {
+						            campoInvalido('Campo Invalido','El telefono esta vacio o el formato es incorrecto');
+						            return false;
+						    } else if ($("#RE-Password").val() == "") {
+					            campoInvalido('Campo Vacio','La contraseña esta vacia');
+					            return false; 
+					        } else if  ($("#RE-Confirmar").val() != $("#RE-Password").val()) {
+					            campoInvalido('Campo Invalido','Las contraseñas deben coincidir');
+					            return false; 
+					        }
+
+					        else{
+					            // Realizar la petición AJAX
+					            $.ajax({
+					                type: 'POST',
+					                url: 'Procesos/registrar.php', // Archivo PHP para procesar los datos en el servidor
+					                data: { Correo: Correo, Telefono: Telefono, Psw: Contrasena, Nombre: Nombre, Rol: 2 }, // Se envia el dato
+					                success: function(response) {
+					                    // Manejar la respuesta del servidor aquí
+					                    if (response == 1) {
+					                    	 Limpiar_Registro_Empresa();
+
+					                        window.location.href = "inicioEmpresa.php";
+					                    } else if (response == 2) {
+					                        campoInvalido("Correo Invalido", "El correo ya esta registrado");
+					                    }else if (response == 4) {
+					                        campoInvalido("Telefono Invalido", "El telefono ya esta registrado");
+					                    }  else {
+					                    	
+					                        mensajeError("Error en el Proceso", "Intente nuevamente");
+					                    }
+					                }
+					            });
+	            			}
+	});
+
+
+
+
+
+
+
+
+		//Recuperar Contraseña
+	$('#recuperarContraForm').submit(function(e) {
+	            e.preventDefault(); // Prevenir el envío del formulario por defecto
+
+	            var Correo = $('#Recuperar_Correo').val();
+	            let emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+
+
+
+		            		if ($("#Recuperar_Correo").val() == "" || !emailreg.test($("#Recuperar_Correo").val())) {
+						            campoInvalido('Campo Invalido','El correo esta vacio o el formato es incorrecto');
+						            return false;
+						    }
+
+					        else{
+					            // Realizar la petición AJAX
+					            /*
+					            $.ajax({
+					                type: 'POST',
+					                url: 'Procesos/registrar.php', // Archivo PHP para procesar los datos en el servidor
+					                data: { Correo: Correo, Telefono: Telefono, Psw: Contrasena, Nombre: Nombre, Rol: 2 }, // Se envia el dato
+					                success: function(response) {
+					                    // Manejar la respuesta del servidor aquí
+					                    if (response == 1) {
+					                    	 Limpiar_Registro_Empresa();
+
+					                        window.location.href = "inicioEmpresa.php";
+					                    } else if (response == 2) {
+					                        campoInvalido("Correo Invalido", "El correo ya esta registrado");
+					                    }else if (response == 4) {
+					                        campoInvalido("Telefono Invalido", "El telefono ya esta registrado");
+					                    }  else {
+					                    	
+					                        mensajeError("Error en el Proceso", "Intente nuevamente");
+					                    }
+					                }
+					            }); */
+					            alert('Correo Enviado')
+	            			}
 	});
 
 
 });
 </script>
-
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-//Validacion de campos del formulaio del Login
-$(document).ready(function() {
-    let emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-
-    $("#IniciarSesion").click(function() {
-        if ($("#L-Correo").val() == "") {
-            campoInvalido('Campo Vacio','El correo esta vacio');
-            return false;
-        }else{
-            if (!emailreg.test($("#L-Correo").val())) {
-                campoInvalido('Campo Invalido','El formato del correo es invalido')
-                return false;
-            }
-        } 
-
-        if ($("#L-Contrasena").val() == "") {
-            campoInvalido('Campo Vacio','La contraseña esta vacia')
-            return false; 
-        }
-    });
-});
-
-//Validacion de campos del formulaio del Registro
-$(document).ready(function() {
-    let emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-
-    $("#Crear").click(function() {
-        if ($("#C-Nombre").val() == "") {
-            campoInvalido('Campo Vacio','El nombre esta vacio')
-            return false; 
-        }
-
-        if ($("#C-Correo").val() == "") {
-            campoInvalido('Campo Vacio','El correo esta vacio');
-            return false;
-        }else{
-            if (!emailreg.test($("#C-Correo").val())) {
-                campoInvalido('Campo Invalido','El formato del correo es invalido')
-                return false;
-            }
-        } 
-
-        if ($("#C-Contrasena").val() == "") {
-            campoInvalido('Campo Vacio','La contraseña esta vacia')
-            return false; 
-        }
-    });
-});
-</script>
-
-
-
-
