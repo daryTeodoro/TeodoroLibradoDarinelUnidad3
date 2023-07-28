@@ -1,5 +1,6 @@
 <?php
 session_start();
+$Cuenta = "darinel.teodoro@gmail.com"
 ?>
 <!doctype html>
 <html lang="en">
@@ -17,12 +18,12 @@ session_start();
       }
 
 
-      .sc::-webkit-scrollbar { /* CSS scrollbar del body*/
+      body::-webkit-scrollbar { /* CSS scrollbar del body*/
         width: 3px;               
-      }.sc::-webkit-scrollbar-track {
+      }body::-webkit-scrollbar-track {
         background: #e0ecff;        
         border-radius: 10px;
-      }.sc::-webkit-scrollbar-thumb {
+      }body::-webkit-scrollbar-thumb {
           background-color: #8797ff;
           border-radius: 10px;
       }
@@ -31,18 +32,31 @@ session_start();
         height: 60px;
         grid-template-columns: 20% 70% 10%;
       }
+
+      .card:hover{
+        background-color: #005970;
+        color: #fff;
+      }
+
+      .cg-b{
+        grid-template-columns: 20% 80%;
+      }
+
+      #Volver{
+        display: none;
+      }
     </style>
   </head>
-  <body>
+  <body style="background-color: #ecf7ff;">
 
     <?php include('menuperfil.php'); ?>
     
     <!--Contenido-->
-    <div class="sc" align="center" style="height: 100vh; overflow-y: auto;">
+    <div class="sc" align="center">
         
-      <div align="center" style="margin: 80px 20px 30px;">
+      <div align="center" style="padding: 90px 20px 30px;">
         <h1 class="ft">Bienvenido</h1>
-        <h4 class="ft">Informate Sobre los Estados de México</h4>
+        <h4 class="ft">Revisa el Catalogo de Viajes Disponibles para cada Estado</h4>
       </div>
 
       <div class="cg cg-c" align="center">
@@ -72,3 +86,37 @@ if (isset($_POST['exit'])) {
   echo'<script>window.location.href="forms.php"</script>';
 }
 ?>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white" data-bs-theme="dark">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Mi Perfil</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" align="center">
+          <?php 
+            include('Procesos/funciones.php'); 
+            $datosperfil = consulta_users($Cuenta);
+
+            echo'<div>
+               <img src="'. $datosperfil['imagen'] .'" class="border border-4 border-light" alt="usuario" style="width: 200px; height: 200px; border-radius: 100px;"><br>
+               <h4 class="fe mt-2">'. $datosperfil['nombre'] .'</h4>
+               <form method="post" action="">
+                  <button type="submit" class="btn btn-outline-dark mt-4 cg cg-b" name="exit" style="width: 50%;">
+                    <div class="at" style="height: 100%;">
+                      <ion-icon name="log-out-outline" style="font-size: 1.5rem;"></ion-icon>
+                    </div>
+                    <div class="at" style="height: 100%;">
+                      <b class="fp" style="font-size: 1.3rem;">Cerrar Sesión</b>
+                    </div>
+                  </button>
+               </form>
+            </div>';
+          ?>
+      </div>
+    </div>
+  </div>
+</div>

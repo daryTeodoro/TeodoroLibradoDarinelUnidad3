@@ -1,7 +1,7 @@
 <?php
 session_start();
+include('Procesos/conexion.php');
 //$Cuenta = $_SESSION['usuario'];
-$Cuenta = 1;
 ?>
 <!doctype html>
 <html lang="en">
@@ -50,6 +50,10 @@ $Cuenta = 1;
 
       .card{
         cursor: pointer;
+      }.card img{
+        filter: brightness(0.9);
+      }.card:hover img{
+        filter: brightness(1.1);
       }
 
       .cg-s{
@@ -105,7 +109,7 @@ $Cuenta = 1;
             <div class="card bg-dark text-white fst" style="width: 18rem;">
               <img src="https://img.freepik.com/fotos-premium/cuatro-estrellas-azul_72104-1337.jpg" class="card-img-top" alt="Eventos" style="height: 12rem;">
               <div class="card-body">
-                <h4 class="card-text">Eventos</h4>
+                <h4 class="card-text">Solicitudes</h4>
               </div>
             </div>
           </div>

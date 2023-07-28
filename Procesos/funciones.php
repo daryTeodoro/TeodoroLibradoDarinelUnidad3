@@ -1,9 +1,9 @@
 <?php
-include ("conexion.php");
 /*Funcion para consultar el correo*/
+
 function consulta_users($id){
-	$cnn = new Conexion();
-	$sql = $cnn->prepare("SELECT * FROM usuarios WHERE correo = :id");
+    $conexion = new Conexion();
+	$sql = $conexion->prepare("SELECT * FROM usuarios WHERE correo = :id");
 	$sql->bindParam(':id',$id);
 	$sql->execute();
 	$contador = $sql->rowCount();
@@ -19,7 +19,7 @@ function consulta_users($id){
 
 
 function consultarestado($Id){
-    $conexion= new conexion();
+    $conexion = new Conexion();
     $estado=$conexion->prepare('SELECT * FROM estados WHERE idstate = :id');
     $estado->bindParam(':id',$Id);
     $estado->execute();
@@ -38,8 +38,8 @@ function consultarestado($Id){
 
 /*Funcion para consulta el telefono*/
 function consulta_number($num){
-    $cnn = new Conexion();
-    $sql = $cnn->prepare("SELECT * FROM usuarios WHERE telefono = :num");
+    $conexion = new Conexion();
+    $sql = $conexion->prepare("SELECT * FROM usuarios WHERE telefono = :num");
     $sql->bindParam(':num',$num);
     $sql->execute();
     $contador = $sql->rowCount();

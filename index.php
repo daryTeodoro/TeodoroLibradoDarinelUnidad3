@@ -285,7 +285,7 @@
 <!--VIDEO PROMOCIONAL-->
 <div id="video-container">
     <video autoplay loop muted>
-      <source src="img/mexicomagico.mp4" type="video/mp4">
+      <source src="img/Mexico.mp4" type="video/mp4">
       <!-- Puedes agregar más fuentes de video para compatibilidad con diferentes navegadores -->
     </video>
 </div>

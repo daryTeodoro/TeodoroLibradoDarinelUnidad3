@@ -1,6 +1,8 @@
 <?php
 session_start();
+include('Procesos/conexion.php');
 $estado = $_SESSION['idstate'];
+$ruta = "inicioUser.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,12 +33,17 @@ $estado = $_SESSION['idstate'];
             top: 0;
             left: 0;
             pointer-events: none; /* para que el video no capture los eventos del ratón y scroll */
+            filter: brightness(0.7);
+        }
+
+        #MiPerfil{
+        	display: none;
         }
     </style>
 </head>
 <body>
 
-	<?php include('navbar.php'); ?>
+	<?php include('menuperfil.php'); ?>
 	<?php
 	    include('Procesos/funciones.php');
 

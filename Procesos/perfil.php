@@ -1,9 +1,9 @@
 <?php 
 include('funciones.php');
 
-$id = 1;
+$id = 'darinel.teodoro@gmail.com';
 
-$datosuser = consultaruser($id);
+$datosuser = consulta_users($id);
 
 echo '
 <form method="post" action="">
