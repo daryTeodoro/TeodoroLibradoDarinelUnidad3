@@ -1,0 +1,21 @@
+.form-control{
+        border: 2px solid #c2d7ff;
+}.form-control:focus{
+        box-shadow: none;
+        border: 2px solid #8fabff;
+}
+
+.btn-info{
+        background: #c2d7ff;
+        border: none;
+}.btn-info:hover{
+        background: #8fabff;
+}
+
+.modal-backdrop{
+        position: initial;
+}.fade{
+        background: rgba(0, 0, 0, 1);
+}.modal-header{
+        background: #ff315a;
+}

@@ -1,0 +1,40 @@
+.Barra::-webkit-scrollbar { /* CSS scrollbar del body*/
+	width: 3px;               
+}.Barra::-webkit-scrollbar-track {
+	background: #ffffff;        
+    border-radius: 10px;
+}.Barra::-webkit-scrollbar-thumb {
+    background-color: #ff315a;
+    border-radius: 10px;
+}
+
+
+@keyframes entrada {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.IconoClose{
+    font-size: 2.7rem;
+    position: fixed;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}.IconoClose:hover{
+    color: #ff315a;
+}
+
+.BotonFoto{
+    background: #d1eafd;
+}
+
+.BotonForm{
+    background-color: #ff315a;
+    border: none;
+    padding: 5px 0px;
+    border-radius: 10px;
+    color: #ffffff;
+}
