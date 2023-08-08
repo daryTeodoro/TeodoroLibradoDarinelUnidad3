@@ -15,6 +15,20 @@ function loguear($Correo){
 	}
 }
 
+function consultar($Numero){
+    $conexion = new Conexion();
+    $numero = $conexion->prepare("SELECT * FROM usuarios WHERE telefono = :telefono");
+    $numero->bindParam(':telefono',$Numero);
+    $numero->execute();
+    $contarnumero = $numero->rowCount();
+
+    if ($contarnumero==1) {
+        return $numero->fetch(PDO::FETCH_ASSOC);
+    } else {
+        return false;
+    }
+}
+
 ?>
 
 
