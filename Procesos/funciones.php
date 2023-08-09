@@ -29,6 +29,20 @@ function consultar($Numero){
     }
 }
 
+function actualizarPsw($usuario, $psw){
+    $conexion = new Conexion();
+    $update = $conexion->prepare('UPDATE usuarios SET contrasena = :newcontrasena, visita = 2 WHERE correo = :user'); 
+    $update->bindParam(':user',$usuario);
+    $update->bindParam(':newcontrasena',$psw);
+
+    $update->execute();
+
+    if ($update) {
+        return 1;
+    } else {
+        return false;
+    }
+}
 ?>
 
 
