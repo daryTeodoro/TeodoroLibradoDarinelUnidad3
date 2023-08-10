@@ -23,7 +23,7 @@ $id = $_POST['id'];
 
 $verinfo = loguear($id);
 
-if ($verinfo['rol'] == 2) {
+if ($verinfo['rol'] == 2) { //si el usuario es un enfermero
 
   $conexion = new Conexion();
   $sqlinfo = $conexion->prepare('SELECT * FROM cuidadores WHERE idenfermero = :enfermero'); 
@@ -48,6 +48,7 @@ if ($verinfo['rol'] == 2) {
   </div>
   ';
 
+  /*Mostrar datos de los pacientes asignado*/
   if ($countsqlinfo > 0) {
     while ($infoex=$sqlinfo->fetch(PDO::FETCH_ASSOC)) {
     $datodelpac = identificar($infoex['idpaciente']);
@@ -77,7 +78,7 @@ if ($verinfo['rol'] == 2) {
     ';
   }
 
-} else if ($verinfo['rol'] == 3) {
+} else if ($verinfo['rol'] == 3) { //como muestra la informacion si es un paciente
   $conexion = new Conexion();
   $infohabi = $conexion->prepare("SELECT * FROM habitaciones WHERE idpaciente = :idpah");
   $infohabi->bindParam(':idpah',$verinfo['id']);
@@ -113,6 +114,7 @@ if ($verinfo['rol'] == 2) {
     </div>
   </div>';
 
+  /*Informacion de la habitacion asignada*/
   if ($countinfohabi > 0) {
     $habi=$infohabi->fetch(PDO::FETCH_ASSOC);
     $infoextra .= '
@@ -138,6 +140,7 @@ if ($verinfo['rol'] == 2) {
     ';
   }
 
+  /*Informacion del enfermero asignado*/
   if ($countinfoenf > 0) {
     $enf=$infoenf->fetch(PDO::FETCH_ASSOC);
     $datodelenf = identificar($enf['idenfermero']);
@@ -166,6 +169,7 @@ if ($verinfo['rol'] == 2) {
   }
 }
 
+/*Contenedor para mostrar la informacion del usuario*/
 echo "
 <div class='navegadorLista shadow'>
   <div><ion-icon name='arrow-back' style='font-size: 30px; cursor: pointer;' onclick='backConsulta()'></ion-icon></div>

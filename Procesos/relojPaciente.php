@@ -1,9 +1,10 @@
 <?php
 date_default_timezone_set('America/Monterrey');
-$horaActualMexico = date('h') - 1 . ':' . date('i');
+//consulta la fecha actual
+$horaActualMexico = date('h') . ':' . date('i');
 $dia = date('d');
 $dia_letras = date('l');
-
+//cambia la fecha a español
 $dia_letras_espanol = '';
 switch ($dia_letras) {
   case 'Monday':
@@ -28,7 +29,7 @@ switch ($dia_letras) {
   $dia_letras_espanol = 'Domingo';
   break;
 }
-
+//cambia el mes a español
 $mes = strftime('%B');
 $mes_espanol = '';
 switch ($mes) {
@@ -69,7 +70,8 @@ switch ($mes) {
   $mes_espanol = 'Diciembre';
   break;
 }
-  
+ 
+//imprime la fecha de hoy
 $anio = date('Y');
 echo '<b>'.$dia_letras_espanol.'</b>';
 echo '<h1>'. $horaActualMexico .'</h1>';

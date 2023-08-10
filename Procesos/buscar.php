@@ -12,6 +12,7 @@ $count=$query->rowCount();
 
 $Salida = "";
 
+/*realiza blucle para presentar a los usuarios*/
 if ($count > 0) {
 while ($search=$query->fetch(PDO::FETCH_ASSOC)) {
 
@@ -20,7 +21,7 @@ while ($search=$query->fetch(PDO::FETCH_ASSOC)) {
 	} else {
 	    $roluser = "<b class='text-primary Fuente-Encode'>Paciente</b>";
 	}
-
+	/*imprime los resultados*/
 	echo '
 	    <button type="button" class="ContenedorInfoUser" data-correo="'.$search['correo'].'">
 	    	<div><img src="Procesos/'.$search['imagen'].'"></div>
@@ -36,21 +37,22 @@ while ($search=$query->fetch(PDO::FETCH_ASSOC)) {
 	</div>
 	';
 }
-//Imprime los datos de los podcasts resultantes
+
 echo $Salida;
 ?>
 
 <script type="text/javascript">
+/*Script para mostrar la infor de un usuario*/
 $(document).ready(function() {
 
       $(".ContenedorInfoUser").click(function() {
         var correo = $(this).data("correo");
 
-        // Ahora puedes usar el valor de 'correo' en tu solicitud AJAX
+    
         $.ajax({
             type: 'POST',
             url: 'Procesos/presentacionUser.php',
-            data: { id: correo }, // Usar 'correo' en lugar de 'identificadoruser'
+            data: { id: correo },
             success: function(datouser) {
                 $("#ListaUsuarios").html(datouser);
             }

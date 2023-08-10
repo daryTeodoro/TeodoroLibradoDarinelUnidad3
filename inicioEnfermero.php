@@ -49,7 +49,6 @@ if($datosUsuarioActivo['visita'] == 1){
   </style>";
 }
 ?>
-  
 <!doctype html>
 <html lang="en">
   <head>
@@ -191,11 +190,9 @@ if($datosUsuarioActivo['visita'] == 1){
 
   </head>
   <body class="Barra">
-
-<!--*****************QUIERO CAMBIAR EL TAMAÑO DE LA LISTA DE TAREAS-->
-
+    <!--Invoca al Menu-->
     <?php include('menu.php'); ?>
-
+    <!--Opciones del enfermero-->
     <div class="Principal" id="Principal">
       <div class="Opciones" onclick="openOption('VistaPacientes')">
         <div><img src="img/opciones-enfermero/paciente.png"></div>
@@ -246,6 +243,7 @@ if($datosUsuarioActivo['visita'] == 1){
       </form>
     </div>
 
+    <!--Formulario de cambio de contraseña para la primera vez-->
     <form method="post" action="" id="First" class="bg-dark mb-0">
       <p class="text-white Fuente-Mochiy">Por motivos de seguridad realiza el cambio de tu contraseña</p>
       <input type="password" class="form-control mb-2" name="ContrasenActual" id="ContrasenActual" placeholder="Ingresa tu Contraseña Actual">
@@ -268,6 +266,7 @@ let vistafirst = document.getElementById("First");
 
   $(document).ready(function() {
 
+    //script para cambiar la contraseña la primera vez
       $("#changePsw").click(function() {
 
         if ($("#ContrasenActual").val() == "") {
@@ -307,13 +306,14 @@ let vistafirst = document.getElementById("First");
 
   });
 
+  //fucnion para abrir una seccion
   function openOption(vista){
     let vistaOpen = document.getElementById(vista);
 
     vistaOpen.style.display= "grid";
     vistaprincipal.style.display= "none";
   }
-
+  //funcion para cerrar una seccion
   function closeOption(vista){
     let vistaClose = document.getElementById(vista);
 
@@ -325,6 +325,7 @@ let vistafirst = document.getElementById("First");
 
 
 <script type="text/javascript">
+  //fucnion para ver datos generales de un paciente
   function mispacientesInfo(correo){
 
     $.ajax({
@@ -337,6 +338,7 @@ let vistafirst = document.getElementById("First");
         });
   }
 
+  //fucnion para consultar las tareas de un paciente
   function mispacientestareas(correo){
 
     $.ajax({
@@ -349,6 +351,7 @@ let vistafirst = document.getElementById("First");
     });
   }
 
+  //funcion para consultar los expedientes de un paciente
   function mispacientesexpediente(correo){
 
     $.ajax({
@@ -361,10 +364,12 @@ let vistafirst = document.getElementById("First");
         });
   }
 
+  /*funcion para cargar un archivo en un contenedor*/
   function Volver(contenedor,ruta){
     $("#"+contenedor).load(ruta);
   }
 
+  //funcion para cambiar el estatus de una tarea
   function changestatus(id){
     let cont = document.getElementById("cont"+id);
     var icono = document.getElementById("icono"+id);
@@ -382,7 +387,7 @@ let vistafirst = document.getElementById("First");
     boton.style.display = "none";
   }
 
-
+  //funcion para ver la conversacion con un usuario
   function historial(correo){
     $.ajax({
             type: 'POST',
@@ -394,7 +399,7 @@ let vistafirst = document.getElementById("First");
     });
   }
 
-
+  //funcion para enviar un mensaje
   function hacerenvio(remitente, destinatario){
     var mensaje = $("#contenidoMessage").val();
 

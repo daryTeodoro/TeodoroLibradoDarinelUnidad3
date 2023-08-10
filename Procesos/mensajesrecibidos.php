@@ -67,18 +67,16 @@
 session_start();
 include('conexion.php');
 include('funciones.php');
-//contenedor para los mensajes
+
 echo '<div class="MessagesList Barra">';
 
-//consulta usuarios que han enviado mensajes al usuario
 $conexion = new Conexion();
-$sql = $conexion->prepare("SELECT * FROM usuarios WHERE id != :enfermero AND correo IN 
+$sql = $conexion->prepare("SELECT * FROM usuarios WHERE correo != :enfermero AND correo IN 
 		(SELECT remitente FROM mensajes WHERE destinatario = :enfermero)");
 $sql->bindParam(":enfermero",$_SESSION['UsuarioActivo']);
 $sql->execute();
 $contar = $sql->rowCount();
 
-//bucle para mostrar la informacion de los remitentes
 if ($contar > 0) {
 	while ($datapac=$sql->fetch(PDO::FETCH_ASSOC)) {
 
@@ -89,7 +87,7 @@ if ($contar > 0) {
 		</div>
 		";
 	}
-} else { //si no hay mensajes
+} else {
 	echo "<div class='sd'>
 	<h2 class='Fuente-Encode'>No hay mensajes</h2>
 	</div>";
@@ -97,7 +95,6 @@ if ($contar > 0) {
 
 echo '</div>';
 
-//contenedor de la conversacion
 echo '<div class="PantallaMessages" id="PantallaMessages">
   
 </div>';

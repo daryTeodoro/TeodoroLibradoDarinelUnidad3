@@ -50,12 +50,12 @@
         justify-content: center;
       }
 </style>
-
+<!--Navbar con opciones-->
 <div class="Menu shadow fixed-top">
 	<div class="MenuColumna1 ms-3"><h3 class="Fuente-Mochiy"><b class="Color-Smart">Smart</b><b class="Color-Care">Care</b></h3></div>
 	<div class="MenuColumna2 me-3"><ion-icon name="menu" class="IconoMenu" onclick="maximizar()"></ion-icon></div>
 </div>
-
+<!--Menu con Opcion para cerrar sesion-->
 <div class="MenuCompleto Fuente-Englebert" id="MenuCompleto">
   <ion-icon name="close" class="IconoClose mt-3 me-3" onclick="minimizar()"></ion-icon>
   <form method="post" action="">
@@ -63,6 +63,7 @@
   </form>
 </div>
 
+<!--Al dar clic en el boton para cerrar sesion:-->
 <?php
 if(isset($_POST['Exit'])){
   session_destroy();
@@ -70,13 +71,14 @@ if(isset($_POST['Exit'])){
 }
 ?>
 
+<!--Funciones de JS para mostrar y ocultar el menu completo-->
 <script type="text/javascript">
   let menuCompleto = document.getElementById("MenuCompleto");
-
+  /*Maximizar*/
   function maximizar(){
     menuCompleto.style.display = 'flex';
   }
-
+  /*Minimizar*/
   function minimizar(){
     menuCompleto.style.display = 'none';
   }

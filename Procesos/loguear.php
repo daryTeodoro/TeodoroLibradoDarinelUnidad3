@@ -9,11 +9,11 @@ $Correo = $_POST['Correo'];
 //Funcion para consultar si el correo ya esta registrado
 $Loguear = loguear($Correo);
 
-if ($Loguear) {
-    $Password = $Loguear['contrasena'];
+if ($Loguear) { /*si existe el correo*/
+    $Password = $Loguear['contrasena']; /*trae la contraseña*/
 
-    if ($Password == $Contrasena) {
-        $_SESSION['UsuarioActivo'] = $Correo;
+    if ($Password == $Contrasena) { /*si las contraseñas son iguales*/
+        $_SESSION['UsuarioActivo'] = $Correo; /*Crea una variable de sesion del usuario logueado*/
         $response = $Loguear['rol'];
     } else {
         $response = 4;

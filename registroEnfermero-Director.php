@@ -37,11 +37,11 @@
 </style>
 
 <div class="RegistroForm" id="RegistroForm">
-
+  <!--Columna con imagen-->
   <div class="Columna1">
     <img src="https://princesasdelhogar.com/wp-content/uploads/2021/11/Enfermera.png">
   </div>
-
+  <!--Columna con campos-->
   <div class="Columna2">
     <div class="VisualizacionFoto mb-2">
       <img src="https://i.pinimg.com/474x/3d/27/c1/3d27c1d91548b66bbe4d0610d9515615.jpg" id="previsualizacionEnfermero" src="#" alt="Vista previa">
@@ -59,7 +59,7 @@
     <button type="button" class="BotonForm" id="enfermeroRegistrar">Registrar</button>
   </div>
 </div><br>
-
+<!--Boton para Cerrar la seccion de registro-->
 <center><b class="Fuente-Mochiy b-Ancla" onclick="minimizaRegistro()">Cerrar</b></center>
 
 

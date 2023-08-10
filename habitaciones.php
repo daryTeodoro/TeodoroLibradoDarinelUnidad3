@@ -1,4 +1,5 @@
 <style type="text/css">
+    /*estilos*/
     .modal-cuarto{
         background: rgba(0, 0, 0, 1) url(https://c5e6g5f8.rocketcdn.me/wp-content/uploads/2020/03/decoraci%C3%B3n-de-cuartos-pastel.jpg) no-repeat;
         background-size: cover;
@@ -7,13 +8,13 @@
 <?php
 include('Procesos/conexion.php');
 include('Procesos/funciones.php');
-
+/*selecciona la informacion de las habitaciones*/
 $conexion = new Conexion();
 $select = $conexion->prepare("SELECT * FROM usuarios WHERE rol = 3 AND id NOT IN (SELECT idpaciente FROM habitaciones WHERE idpaciente IS NOT NULL)");
 $select->execute();
 $resultados = $select->fetchAll(PDO::FETCH_ASSOC);
 
-
+/*DATOS DE LA HABITACION*/
 $habitantece1 = habitaciones('CE-1');
 
 if ($habitantece1['idpaciente'] == 'vacio') {
@@ -39,7 +40,7 @@ if ($habitantece1['idpaciente'] == 'vacio') {
 	';
 }
 
-
+/*DATOS DE LA HABITACION*/
 $habitantece2 = habitaciones('CE-2');
 
 if ($habitantece2['idpaciente'] == 'vacio') {
@@ -65,7 +66,7 @@ if ($habitantece2['idpaciente'] == 'vacio') {
 	';
 }
 
-
+/*DATOS DE LA HABITACION*/
 $habitanteci1 = habitaciones('CI-1');
 
 if ($habitanteci1['idpaciente'] == 'vacio') {
@@ -91,7 +92,7 @@ if ($habitanteci1['idpaciente'] == 'vacio') {
 	';
 }
 
-
+/*DATOS DE LA HABITACION*/
 $habitanteci2 = habitaciones('CI-2');
 
 if ($habitanteci2['idpaciente'] == 'vacio') {
@@ -117,7 +118,7 @@ if ($habitanteci2['idpaciente'] == 'vacio') {
 	';
 }
 
-
+/*DATOS DE LA HABITACION*/
 $habitanteci3 = habitaciones('CI-3');
 
 if ($habitanteci3['idpaciente'] == 'vacio') {
@@ -143,7 +144,7 @@ if ($habitanteci3['idpaciente'] == 'vacio') {
 	';
 }
 
-
+/*DATOS DE LA HABITACION*/
 $habitanteci4 = habitaciones('CI-4');
 
 if ($habitanteci4['idpaciente'] == 'vacio') {
@@ -169,7 +170,7 @@ if ($habitanteci4['idpaciente'] == 'vacio') {
 	';
 }
 
-
+/*DATOS DE LA HABITACION*/
 $habitanteci5 = habitaciones('CI-5');
 
 if ($habitanteci5['idpaciente'] == 'vacio') {
@@ -195,7 +196,7 @@ if ($habitanteci5['idpaciente'] == 'vacio') {
 	';
 }
 
-
+/*DATOS DE LA HABITACION*/
 $habitanteci6 = habitaciones('CI-6');
 
 if ($habitanteci6['idpaciente'] == 'vacio') {
@@ -221,7 +222,7 @@ if ($habitanteci6['idpaciente'] == 'vacio') {
 	';
 }
 
-
+/*Mapea los cuartos y habitaciones*/
 echo"
 <div class='jardin border border-dark border-4 border-bottom-0 border-end-0'>1</div>
 <div class='jardin border border-dark border-4 border-bottom-0 border-start-0'>2</div>
@@ -415,6 +416,7 @@ echo"
 ?>
 
 <script type="text/javascript">
+/*Scripts para Asignar y vaciar habitaciones*/
 $(document).ready(function() {
 
     $("#botonce1").click(function() {

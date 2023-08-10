@@ -51,24 +51,25 @@
 session_start();
 include('conexion.php');
 include('funciones.php');
-
+//boton para cerrar la seccion
 echo '
 <div class="AlignEnd">
 <ion-icon name="close" class="IconoClose" onclick="closeOption(\'VistaTareas\')">
 </ion-icon></div>
 ';
 
+//imprime los pacientes asignados
 echo '
 <form method="post" action="" class="ContenedorCards" id="ContenedorCards3">
 ';
-
+//consulta la info de los pacientes asignados
 $conexion = new Conexion();
 $sql = $conexion->prepare("SELECT * FROM cuidadores WHERE idenfermero = :enfermero");
 $sql->bindParam(":enfermero",$_SESSION['IdUsuarioActivo']);
 $sql->execute();
 $contar = $sql->rowCount();
 
-if ($contar == 1) {
+if ($contar == 1) {  //si solo hay un paciente asignado
 	$datapac = $sql->fetch(PDO::FETCH_ASSOC);
 	$idpac = $datapac['idpaciente'];
 	$identificar = identificar($idpac);
@@ -97,7 +98,7 @@ if ($contar == 1) {
 	</button>
 	</div>
 	";
-} else if ($contar == 2) {
+} else if ($contar == 2) { //si hay 2 pacientes asignados
 	while ($datapac=$sql->fetch(PDO::FETCH_ASSOC)) {
 		$idpac = $datapac['idpaciente'];
 		$identificar = identificar($idpac);
@@ -119,7 +120,7 @@ if ($contar == 1) {
 	</button>
 	</div>
 	";
-} else if ($contar == 3) {
+} else if ($contar == 3) { //si hay 3 pacientes asignados
 	while ($datapac=$sql->fetch(PDO::FETCH_ASSOC)) {
 		$idpac = $datapac['idpaciente'];
 		$identificar = identificar($idpac);
@@ -133,7 +134,7 @@ if ($contar == 1) {
 		</div>
 		";
 	}
-} else {
+} else { //si no hay ningun paciente asignado
 	echo "
 	<div class='ContenedorBotones'>
 	<button type='button' class='SinAsignar' disabled>

@@ -41,9 +41,9 @@
         width: 100%;
       }
 </style>
-
+<!--Fromulario para registro de pacientes-->
 <div class="RegistroFormPaciente" id="RegistroForm">
-
+<!--Columna con campos-->
   <div class="Columna2">
 
     <div class="VisualizacionFoto mb-2">
@@ -68,12 +68,12 @@
       <button type="button" class="BotonForm" style="width: 100%;" id="pacienteRegistrar">Registrar</button>
     </div>
   </div>
-
+<!--Columna con imagen-->
   <div class="Columna1">
     <img src="https://tomatisecuador.com/wp-content/uploads/2021/06/34-1247x1536.png">
   </div>
 </div><br>
-
+<!--Boton para Cerrar la seccion de registro-->
 <center><b class="Fuente-Mochiy b-Ancla" onclick="minimizaRegistro()">Cerrar</b></center>
 
     <!-- Modal -->
@@ -85,6 +85,7 @@
             <ion-icon name="close" data-bs-dismiss="modal" style="cursor: pointer; font-size: 2rem;"></ion-icon>
           </div>
           <div class="modal-body" align="center" id="modal-body">
+            <!--Select para pregunta 1-->
             <select class="form-select border border-dark border-2 mb-2" name="Pregunta1Paciente" id="Pregunta1Paciente">
               <option value="0" selected>Seleccione una Pregunta</option>
               <option value="¿Cual es tu comida favorita?">¿Cual es tu comida favorita?</option>
@@ -100,9 +101,9 @@
               <option value="¿Cuál es el modelo de tu primer coche?">¿Cuál es el modelo de tu primer coche?</option>
               <option value="¿Cuál es tu canción favorita?">¿Cuál es tu canción favorita?</option>
             </select>
-
+            <!--Input para respuesta de la pregunta 1-->
             <input type="text" class="form-control mb-5" name="Respuesta1" id="Respuesta1" placeholder="Respuesta" style="width: 100%;">
-
+            <!--Select para pregunta 2-->
             <select class="form-select border border-dark border-2 mb-2" name="Pregunta2Paciente" id="Pregunta2Paciente">
               <option value="0" selected>Seleccione una Pregunta</option>
               <option value="¿Cual es tu comida favorita?">¿Cual es tu comida favorita?</option>
@@ -118,7 +119,7 @@
               <option value="¿Cuál es el modelo de tu primer coche?">¿Cuál es el modelo de tu primer coche?</option>
               <option value="¿Cuál es tu canción favorita?">¿Cuál es tu canción favorita?</option>
             </select>
-
+            <!--Input para respuesta de la pregunta 2-->
             <input type="text" class="form-control" name="Respuesta2" id="Respuesta2" placeholder="Respuesta" style="width: 100%;">
           </div>
         </div>

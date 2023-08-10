@@ -2,6 +2,7 @@
     session_start();
     include('conexion.php');
 
+	/*Consulta los usuarios que han enviado mensajes al usuario o a quienes el usuario ha enviado*/
 	$cnn = new Conexion();
 	$datosmensaje = $cnn->prepare("SELECT * FROM usuarios WHERE id != :iduser AND correo IN 
 		(SELECT remitente FROM mensajes WHERE destinatario = :iduser
@@ -11,6 +12,7 @@
 	$datosmensaje->execute();
 	$contarmensajes = $datosmensaje->rowCount();
 
+	//bucle para mostrar a los usuarios
 	if ($contarmensajes>0) {
 	    while ($datamessage=$datosmensaje->fetch(PDO::FETCH_ASSOC)) {
 
@@ -26,6 +28,7 @@
 	    		$r = '<b class="bg-danger text-white p-2 pt-1 pb-1 rounded">'.$contarmensajesp.'</b>';
 	    	}
 
+			//imprime la informacion de los usuarios
 	    	echo '
 	    	<button type="button" class="ContenedorInfoMensajes" data-id="'.$datamessage['correo'].'">
 	    	    <div><img src="Procesos/'.$datamessage['imagen'].'"></div>
@@ -34,7 +37,7 @@
 	    	</button>
 	    	';
 	    }
-	} else {
+	} else { //si no hay ningun chat
 		echo'
 		<div class="SinReferencias">
 	        <h2 class="Fuente-Encode"><b>Sin Mensajes</b></h2>
@@ -43,18 +46,17 @@
 	}
 ?>
 
-
 <script type="text/javascript">
+//script para consultar historial de chat
 $(document).ready(function() {
 
     $(".ContenedorInfoMensajes").click(function() {
         var iddes = $(this).data("id");
 
-        // Ahora puedes usar el valor de 'correo' en tu solicitud AJAX
         $.ajax({
             type: 'POST',
             url: 'Procesos/mensajes.php',
-            data: { id: iddes }, // Usar 'correo' en lugar de 'identificadoruser'
+            data: { id: iddes },
             success: function(datouser) {
             	mensajespersonal.style.display = 'grid';
                 $("#intermen").html(datouser);

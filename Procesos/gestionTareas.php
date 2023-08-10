@@ -64,11 +64,12 @@
 <?php
 include('conexion.php');
 include('funciones.php');
-
+//id del paciente a consultar
 $id = $_POST['id'];
-
+//trae los datos del paciente
 $verinfo = loguear($id);
 
+//consulta las tareas del paciente
   $conexion = new Conexion();
   $infopac = $conexion->prepare("SELECT * FROM tareas WHERE iduser = :id");
   $infopac->bindParam(':id',$id);
@@ -77,10 +78,12 @@ $verinfo = loguear($id);
 
   $infoextra ='';
 
+  //por medio de un bucle muestra la informacion de las tareas
   if ($countinfopac > 0){
 
     while ($data=$infopac->fetch(PDO::FETCH_ASSOC)) {
 
+      //verifica si ya se cumplio o no la tarea
         if ($data['estatus'] == 0){
           $Estatus = "background: #d2fdde;";
           $displayicon = "display: block; font-size: 2rem;";
@@ -91,6 +94,7 @@ $verinfo = loguear($id);
           $displayboton = "display: block; border: 2px solid #000000; color: #ffffff; background: #ffffff;";
         }
 
+        //imprime la informacion de la tarea
         $infoextra .= '<div class="p-3 Tarea" style="'.$Estatus.'" id="cont'.$data['id'].'">
           <div class="Col"><img src="'.$data['tipo'].'"></div>
           <div class="Col"><b class="Fuente-Fugaz">'.$data['tarea'].'</b></div>
@@ -102,13 +106,14 @@ $verinfo = loguear($id);
 
       }
 
-  } else {
+  } else { //si no hay tareas
     $infoextra .= '
     <div class="Alineacion">
       <h2 class="Fuente-Encode">No hay tareas</h2>
     </div>';
   }
 
+  //contenedor principal
 echo '
 <div class="bg-dark EspacioNav">
   <div><ion-icon name="arrow-back" style="font-size: 30px; cursor: pointer; color: #ffffff;" onclick="Volver(\'VistaTareas\',\'Procesos/mispacientes-tareas.php\')"></ion-icon></div>

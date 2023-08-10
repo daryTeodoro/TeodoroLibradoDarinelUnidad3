@@ -20,7 +20,6 @@ if(!empty($_SESSION['UsuarioActivo'])){
   }
 }
 ?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -82,14 +81,16 @@ if(!empty($_SESSION['UsuarioActivo'])){
 
   </head>
   <body>
-
+    <!----------------------------------Contenedor General------------------------------->
     <div class="Presentacion">
 
+      <!--Columna 1-->
       <div class="Columna1">
         <h1 class="Fuente-Mochiy"><b class="Color-Smart">Smart</b><b class="Color-Care">Care</b></h1>
         <h5 class="Fuente-Sofia bg-light p-4 pt-1 pb-1"><b>Innovando en el Cuidado de la Salud</b></h5>
       </div>
 
+      <!--Fomulario de Login-->
       <div class="Columna2 Fuente-Encode">
         <h1 class="Fuente-Tangerine">Iniciar Sesion</h1>
         <form method="post" action="" id="LoginForm">
@@ -97,7 +98,7 @@ if(!empty($_SESSION['UsuarioActivo'])){
           <input type="password" class="form-control shadow" id="Contrasena" placeholder="Introduce tu Contraseña">
 
           <h6 class="mt-3">¿Olvidaste tu Contrasena? <b class="b-Ancla" onclick="recuperar()">Recuperar Contraseña</b></h6>
-
+          <!--Boton para iniciar sesion-->
           <button type="submit" class="btn btn-info mt-3 shadow"><b>Iniciar Sesion</b></button>
         </form>
       </div>
@@ -115,14 +116,15 @@ $(document).ready(function() {
   $('#LoginForm').submit(function(e) {
   e.preventDefault(); // Prevenir el envío del formulario por defecto
 
+  /*Credenciales de Acceso*/
     var Correo = $('#Correo').val();
     var Contrasena = $('#Contrasena').val();
 
 
-    if ($("#Correo").val() == "") {
+    if ($("#Correo").val() == "") { /*Si esta vacio*/
       alert('El Usuario esta vacio');
       return false;
-    } else if($("#Contrasena").val() == ""){
+    } else if($("#Contrasena").val() == ""){ /*Si esta vacio*/
       alert('La contraseña esta vacia');
       return false; 
     } else {
@@ -150,6 +152,7 @@ $(document).ready(function() {
   });
 });
 
+/*ir a interfaz para cambiar contraseña*/
 function recuperar(){
   window.location.href = "recuperarContrasena.php";
 }

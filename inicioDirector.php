@@ -25,7 +25,6 @@ if(empty($_SESSION['UsuarioActivo'])){
   }
 }
 ?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -350,7 +349,7 @@ if(empty($_SESSION['UsuarioActivo'])){
 
   </head>
   <body class="Barra">
-
+    <!--Mandamos a llamar al menu-->
     <?php include('menu.php'); ?>
 
     <!------------------------------------------CONTENEDOR PRINCIPAL------------------------------------------------->
@@ -454,6 +453,7 @@ if(empty($_SESSION['UsuarioActivo'])){
 
 
 <script type="text/javascript">
+/*Contenedores*/
 let contenedorPrincipal = document.getElementById("Principal");
 
 let contenedorRegistro = document.getElementById("ContenedorGeneralRegistro");
@@ -466,16 +466,17 @@ var botonEnfermero = document.getElementById("Enfermero");
 botonEnfermero.disabled=false;
 botonPaciente.disabled=true;
 
+/*mostrar seccion de registro*/
 function registrar(){
    contenedorRegistro.style.display = 'flex';
    contenedorPrincipal.style.display = 'none';
 }
-
+/*ocultar seccion de registro*/
 function minimizaRegistro(){
    contenedorRegistro.style.display = 'none';
    contenedorPrincipal.style.display = 'grid';
 }
-
+/*cambiar a formulario de registro paciente*/
 function pacienteForm(){
     registroEnfermero.style.display = 'none';
     registroPaciente.style.display = 'block';
@@ -486,7 +487,7 @@ function pacienteForm(){
     botonEnfermero.classList.remove('BotonSeleccionado');
     botonEnfermero.classList.add('BotonSeleccionar');
 }
-
+/*cambiar a formulario de registro enfermero*/
 function enfermeroForm(){
     registroEnfermero.style.display = 'block';
     registroPaciente.style.display = 'none';
@@ -499,25 +500,25 @@ function enfermeroForm(){
 }
 
 
-
+/*Abrir seccion de consulta*/
 let contenedorConsulta = document.getElementById("ContenedorConsultar");
 
 function consultar(){
    contenedorConsulta.style.display = 'flex';
    contenedorPrincipal.style.display = 'none';
 }
-
+/*ocultar seccion de consulta*/
 function minimizaConsulta(){
    contenedorConsulta.style.display = 'none';
    contenedorPrincipal.style.display = 'grid';
 }
-
+/*regresar del de la informacion del usuario*/
 function backConsulta(){
     $("#ListaUsuarios").load('Procesos/ListaUsuarios.php');
 }
 
 
-
+/*Seccion Gestionar*/
 let contenedorGestiona = document.getElementById("ContenedorGestionar");
 
 var botonAsgEnfermero = document.getElementById("AsgEnfermero");
@@ -528,17 +529,17 @@ let contAsignHab = document.getElementById("contAsignHab");
 
 botonAsgEnfermero.disabled=false;
 botonAsgHabitacion.disabled=true;
-
+/*Abrir seccion de gestion*/
 function gestionar(){
    contenedorGestiona.style.display = 'flex';
    contenedorPrincipal.style.display = 'none';
 }
-
+/*Cerrar seccion de gestion*/
 function minimizaGestion(){
    contenedorGestiona.style.display = 'none';
    contenedorPrincipal.style.display = 'grid';
 }
-
+/*Cambiar a formulario de asignar habitacion*/
 function AsinarHabitacionForm(){
     contAsignEnf.style.display = 'none';
     contAsignHab.style.display = 'grid';
@@ -550,7 +551,7 @@ function AsinarHabitacionForm(){
     botonAsgEnfermero.classList.remove('BotonSeleccionado');
     botonAsgEnfermero.classList.add('BotonSeleccionar');
 }
-
+/*Cambiar a formulario de asignar enfermero*/
 function AsignarEnfermeroForm(){
     contAsignEnf.style.display = 'grid';
     contAsignHab.style.display = 'none';
@@ -562,14 +563,14 @@ function AsignarEnfermeroForm(){
     botonAsgEnfermero.classList.add('BotonSeleccionado');
 }
 
-
+/*Seccion de Mensajes*/
 let contenedorMensajes = document.getElementById("ContenedorMensajes");
-
+/*Abrir seccion de mensajes*/
 function mensajear(){
    contenedorMensajes.style.display = 'flex';
    contenedorPrincipal.style.display = 'none';
 }
-
+/*cerrar seccion de mensajes*/
 function minimizaMensajes(){
    contenedorMensajes.style.display = 'none';
    contenedorPrincipal.style.display = 'grid';
@@ -579,6 +580,7 @@ let mensajespersonal = document.getElementById("intermen");
 </script>
 
 <script>
+      /*Funcion para registrar paciente*/
   $(document).ready(function() {
 
       $("#pacienteRegistrar").click(function() {
@@ -632,6 +634,7 @@ let mensajespersonal = document.getElementById("intermen");
         }
       });
 
+      /*Funcion para registrar enfermero*/
       $("#enfermeroRegistrar").click(function() {
       let emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
 
@@ -671,7 +674,7 @@ let mensajespersonal = document.getElementById("intermen");
 
   });
 
-  //Codigo para buscar (Filtrar)
+  //Codigo para buscar (Filtrar) en consultar
   $(function(){
     $("#search").on("keyup", function(){
       var search = $("#search").val();
@@ -690,6 +693,7 @@ let mensajespersonal = document.getElementById("intermen");
     })
   });
 
+  /*Codigo para enviar mensaje*/
   function mandar(){
     var mensaje = $("#mensajeEnviado").val();
     var destinatario = $("#para").val();
@@ -704,16 +708,14 @@ let mensajespersonal = document.getElementById("intermen");
         url: 'Procesos/insertmessage.php',
         data: { r: remitente, d: destinatario, m: mensaje },
         success: function(r) {
-            console.log('Enviado');
-        }
-      });
-
-      $.ajax({
-        type: 'POST',
-        url: 'Procesos/mensajes.php',
-        data: { id: destinatario },
-        success: function(datouser) {
-            $("#intermen").html(datouser);
+            $.ajax({
+              type: 'POST',
+              url: 'Procesos/mensajes.php',
+              data: { id: destinatario },
+              success: function(datouser) {
+                $("#intermen").html(datouser);
+              }
+            });
         }
       });
 
@@ -721,7 +723,7 @@ let mensajespersonal = document.getElementById("intermen");
   }
 
 
-  //Codigo para buscar (Filtrar)
+  //Codigo para buscar (Filtrar) en mensajes
   $(function(){
     $("#buscaremitentes").on("keyup", function(){
       var search = $("#buscaremitentes").val();
@@ -746,6 +748,7 @@ let mensajespersonal = document.getElementById("intermen");
 </script>
 
 <script type="text/javascript">
+/*Mostrar informacio de usuario*/
 $(document).ready(function() {
 
     $(".ContenedorInfoUser").click(function() {

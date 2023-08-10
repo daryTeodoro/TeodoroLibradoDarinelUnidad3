@@ -21,6 +21,7 @@ while ($search=$query->fetch(PDO::FETCH_ASSOC)) {
 	    $roluser = "<b class='text-primary Fuente-Encode'>Paciente</b>";
 	}
 
+	/*imprime la informacion del usuario*/
 	echo '
 	    <button type="button" class="ContenedorInfoMensajes" data-id="'.$search['correo'].'">
 	    	<div><img src="Procesos/'.$search['imagen'].'"></div>
@@ -36,7 +37,7 @@ while ($search=$query->fetch(PDO::FETCH_ASSOC)) {
 	</div>
 	';
 }
-//Imprime los datos de los podcasts resultantes
+
 echo $Salida;
 ?>
 

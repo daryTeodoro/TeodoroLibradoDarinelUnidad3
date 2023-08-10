@@ -53,11 +53,12 @@
 session_start();
 include('conexion.php');
 include('funciones.php');
-
+//usuario seleccionado
 $remitente = $_POST['id'];
 
 $verinfo = loguear($remitente);
 
+//Busca el historial de mensajes entre el suaurio logueado y el usuario seleccionado
   $conexion = new Conexion();
   $sqlinfo = $conexion->prepare('SELECT * FROM mensajes WHERE remitente = :remitente AND destinatario = :destinatario OR remitente = :destinatario AND destinatario = :remitente'); 
   $sqlinfo->bindParam(':remitente',$remitente);
@@ -65,6 +66,7 @@ $verinfo = loguear($remitente);
   $sqlinfo->execute();
   $countsqlinfo = $sqlinfo->rowCount();
 
+  //consulta los mensajes no leidos
   $updatesta = $conexion->prepare('UPDATE mensajes SET leido = 0 WHERE remitente = :rem AND destinatario = :des'); 
   $updatesta->bindParam(':rem',$remitente);
   $updatesta->bindParam(':des',$_SESSION['UsuarioActivo']);
@@ -74,7 +76,7 @@ $verinfo = loguear($remitente);
 
   if($countsqlinfo > 0){
   	while ($data=$sqlinfo->fetch(PDO::FETCH_ASSOC)){
-  		
+  		//clasificacion de remitente y usuario
   		if ($data['remitente'] == $_SESSION['UsuarioActivo']){
   			$clase = 'remitente';
   		} else {
@@ -89,7 +91,7 @@ $verinfo = loguear($remitente);
   } else {
   	$resultados = '<center><b class="Fuente-Monomaniac">--- Comienza una Conversacion ---</b></center>';
   }
-
+//imprime el historial de mensajes
 echo '
 <div class="headMensajes">
     <div><ion-icon name="arrow-back" style="font-size: 30px; cursor: pointer;" onclick="backMensajes()"></ion-icon></div>
@@ -110,6 +112,7 @@ echo '
 ?>
 
 <script type="text/javascript">
+    //script para volver a la lista de usuarios
 function backMensajes() {
 	mensajespersonal.style.display = "none";
 }

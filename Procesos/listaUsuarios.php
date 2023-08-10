@@ -1,13 +1,14 @@
 <?php
     session_start();
     include('conexion.php');
-
+	/*Consulta los registros de usuarios*/
 	$cnn = new Conexion();
 	$lista = $cnn->prepare("SELECT * FROM usuarios WHERE id != :iduser ORDER BY nombre");
 	$lista->bindParam(':iduser',$_SESSION['IdUsuarioActivo']);
 	$lista->execute();
 	$contarusuarios = $lista->rowCount();
 
+	/*Hace un bucle para mostrar todos los registros*/
 	if ($contarusuarios>0) {
 	    while ($info=$lista->fetch(PDO::FETCH_ASSOC)) {
 
@@ -17,6 +18,7 @@
 	    		$roluser = "<b class='text-primary Fuente-Encode'>Paciente</b>";
 	    	}
 
+			/*Imprimimos la informacion del usuario*/
 	    	echo '
 	    	<button type="button" class="ContenedorInfoUser" data-correo="'.$info['correo'].'">
 	    	    <div><img src="Procesos/'.$info['imagen'].'"></div>
@@ -26,6 +28,7 @@
 	    	';
 	    }
 	} else {
+		/*Si no hay registros*/
 		echo'
 		<div class="SinReferencias">
 	        <h2 class="Fuente-Encode"><b>Sin Registros</b></h2>
@@ -45,7 +48,7 @@ $(document).ready(function() {
         $.ajax({
             type: 'POST',
             url: 'Procesos/presentacionUser.php',
-            data: { id: correo }, // Usar 'correo' en lugar de 'identificadoruser'
+            data: { id: correo },
             success: function(datouser) {
                 $("#ListaUsuarios").html(datouser);
             }

@@ -37,23 +37,18 @@
 <?php
 include('conexion.php');
 include('funciones.php');
-
+//id del paciente a consultar
 $id = $_POST['id'];
-
+//trae los datos del paciente
 $verinfo = loguear($id);
-
+//consulta la habitacion que se le asigno
   $conexion = new Conexion();
   $infohabi = $conexion->prepare("SELECT * FROM habitaciones WHERE idpaciente = :idpah");
   $infohabi->bindParam(':idpah',$verinfo['id']);
   $infohabi->execute();
   $countinfohabi = $infohabi->rowCount();
 
-  $infoenf = $conexion->prepare("SELECT * FROM cuidadores WHERE idpaciente = :idpae");
-  $infoenf->bindParam(':idpae',$verinfo['id']);
-  $infoenf->execute();
-  $countinfoenf = $infoenf->rowCount();
-
-
+//muestra demas datos del paciente
   $infoextra = ' <div class="continfoextra">
     <div style="border-top: 2px solid #a9071d;">
       <ion-icon name="call" style="font-size: 3rem;"></ion-icon>
@@ -77,7 +72,7 @@ $verinfo = loguear($id);
     </div>
   </div>';
 
-  if ($countinfohabi > 0) {
+  if ($countinfohabi > 0) { //si tiene asignado una habitacion
     $habi=$infohabi->fetch(PDO::FETCH_ASSOC);
     $infoextra .= '
     <div class="continfoextra">
@@ -89,7 +84,7 @@ $verinfo = loguear($id);
         </div>
     </div>
     ';
-  } else {
+  } else { //si no tiene asignado una habitacion
     $infoextra .= '
     <div class="continfoextra">
         <div style="border: 2px solid #067c90; background: #b8e1fc;">
@@ -102,6 +97,7 @@ $verinfo = loguear($id);
     ';
   }
 
+//Datos del paciente
 echo '
 <div class="bg-dark EspacioNav">
   <div><ion-icon name="arrow-back" style="font-size: 30px; cursor: pointer; color: #ffffff;" onclick="Volver(\'VistaPacientes\',\'Procesos/mispacientes.php\')"></ion-icon></div>

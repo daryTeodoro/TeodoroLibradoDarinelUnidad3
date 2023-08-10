@@ -1,3 +1,4 @@
+<!--FORMULARIO PARA ASIGNAR ENFERMERO A PACIENTE (FUNCION DEL DIRECTOR)-->
 <style type="text/css">
     .formasen{
         display: flex;
@@ -9,11 +10,13 @@
 
 <?php include('Procesos/conexion.php');
 $conexion = new Conexion();
+/*Consulta usuarios que sean pacientes y no tengan enfermeros asignados*/
 $select1 = $conexion->prepare("SELECT * FROM usuarios WHERE rol = 3 AND id NOT IN (SELECT idpaciente FROM cuidadores WHERE idpaciente IS NOT NULL)");
 $select1->execute();
 
 $resultados1 = $select1->fetchAll(PDO::FETCH_ASSOC);
 
+/*consulta a los enfermeros que tengan menos de 3 pacientes asignados*/
 $select2 = $conexion->prepare("SELECT u.* FROM usuarios u WHERE u.rol = 2
     AND (
         SELECT COUNT(*)
@@ -25,8 +28,10 @@ $select2->execute();
 
 $resultados2 = $select2->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<!--Formulario para asignar enfermeros a pacientes-->
 <form class="formasen" method="post" action="">
     <?php
+    //muestra los pacientes en un select
     echo '<select id="datosdepac" class="form-control mb-3">
     <option value="0" selected>Selecciona un Paciente</option>';
     foreach ($resultados1 as $linea1) {
@@ -36,6 +41,7 @@ $resultados2 = $select2->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
     <?php
+    //muestra los enfermeros
     echo '<select id="datosdeenf" class="form-control mb-3">
     <option value="0" selected>Selecciona una Enfermero</option>';
     foreach ($resultados2 as $linea2) {
@@ -45,6 +51,7 @@ $resultados2 = $select2->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
     <div>
+        <!--Boton para asignar-->
         <button class="BotonForm p-2 pe-4 ps-4" type="button" id="Asgn">Asignar</button>
     </div>
 </form>
@@ -52,7 +59,7 @@ $resultados2 = $select2->fetchAll(PDO::FETCH_ASSOC);
 
 <script type="text/javascript">
 $(document).ready(function() {
-
+    /*Script para hacer el proceso de asignacion*/
     $("#Asgn").click(function() {
         var beneficiario = $('#datosdepac').val();
         var asignado = $('#datosdeenf').val();

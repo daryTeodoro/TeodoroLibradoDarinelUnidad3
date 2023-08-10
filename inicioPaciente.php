@@ -52,7 +52,6 @@ if($datosUsuarioActivo['visita'] == 1){ //Si es la primera vez
   </style>";
 }
 ?>
-  
 <!doctype html>
 <html lang="en">
   <head>
@@ -164,21 +163,37 @@ if($datosUsuarioActivo['visita'] == 1){ //Si es la primera vez
 
       .Datos{
         display: grid;
-        grid-template-columns: 50% 50%;
+        grid-template-columns: 40% 40% 20%;
+      }
+
+
+      #Mensajes{
+        display: none;
+        height: 100vh;
+        width: 100%;
+        position: absolute;
+        z-index: 2;
+        background: #ffffff;
+        animation: entrada 0.3s linear forwards;
+
+        grid-template-rows: 8vh 92vh;
+      }
+
+      .ContenedorCards{
+        display: grid;
+        grid-template-columns: 40% 60%;
       }
     </style>
 
   </head>
   <body>
-
-<!--*****************QUIERO CAMBIAR EL TAMAÑO DE LA LISTA DE TAREAS-->
-
+    <!--Invoca al menu-->
     <?php include('menu.php'); ?>
 
     <div class="Principal" id="Principal">
       <div class="Columna1">
         <div class="bg-light p-3 rounded mb-5 InformacionUsuario">
-          
+          <!--Informacion del usuario-->
           <div class="FotoPerfil">
             <img src="<?php echo 'Procesos/'.$datosUsuarioActivo['imagen']; ?>">
           </div>
@@ -189,22 +204,27 @@ if($datosUsuarioActivo['visita'] == 1){ //Si es la primera vez
             <div class="Datos Fuente-Encode">
               <div class="Derecha"><b>Estatura</b><br><?php echo $datosUsuarioActivo['estatura'].' cm'; ?></div>
               <div class="Izquierda"><b>Peso</b><br><?php echo $datosUsuarioActivo['peso'].' kg' ?></div>
+              <!--Boton para acceder alos mensajes recibidos-->
+              <div><button class="btn btn-success" style="width: 100%; height:100%;" onclick="verMensajes()"><ion-icon name="notifications"></ion-icon></button></div>
             </div>
 
           </div>
         </div>
         <div class="Reloj Fuente-Monomaniac" id="Reloj">
+          <!--Reloj que muestra la hora-->
           <?php include('Procesos/relojPaciente.php') ?>
         </div>
       </div>
       <div class="Columna2">
         <div class="ListaDiaria pt-2 pb-0 shadow-lg">
+          <!--Lista de tareas a realizar-->
           <h1 class="Fuente-Fredericka bg-light p-1">Tareas Diarias</h1>
           <div class="Barra" id="Tareas"></div>
         </div>
       </div>
     </div>
 
+    <!--Formulario para cambiar la contraseña-->
     <form method="post" action="" id="First" class="bg-dark mb-0">
       <p class="text-white Fuente-Mochiy">Por motivos de seguridad realiza el cambio de tu contraseña</p>
       <input type="password" class="form-control mb-2" name="ContrasenActual" id="ContrasenActual" placeholder="Ingresa tu Contraseña Actual">
@@ -212,6 +232,16 @@ if($datosUsuarioActivo['visita'] == 1){ //Si es la primera vez
       <input type="password" class="form-control" name="ContrasenaNuevaRE" id="ContrasenaNuevaRE" placeholder="Repite la Nueva Contraseña">
       <button type="button" class="btn btn-danger mt-3" id="changePsw">Cambiar Contraseña</button>
     </form>
+
+    <!--Contenedor de los mensajes-->
+    <div id="Mensajes">
+      <div><button class="btn btn-success" style="width: 100%; height: 100%; border-radius: 0;" onclick="cerrarMensajes()">Cerrar</button></div>
+      <form method="post" action="" class="ContenedorCards" id="ContenedorCards">
+        <script type="text/javascript">
+          $("#ContenedorCards").load('Procesos/mensajesrecibidos.php');
+        </script>
+      </form>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <!--Iconos-->
@@ -221,6 +251,10 @@ if($datosUsuarioActivo['visita'] == 1){ //Si es la primera vez
 </html>
 
 <script type="text/javascript">
+let vistamensajes = document.getElementById("Mensajes");
+let vistaprincipal = document.getElementById("Principal");
+
+
 $(document).ready(function() {
 
   // Función para actualizar la hora
@@ -233,15 +267,59 @@ $(document).ready(function() {
   }, 1000);
 
 });
-</script>
+//fucnion para acceder a los mensajes
+function verMensajes(){
+  vistamensajes.style.display = "grid";
+  vistaprincipal.style.display = "none";
+}
+//funcion para cerrar seccion de mensajes
+function cerrarMensajes(){
+  vistamensajes.style.display = "none";
+  vistaprincipal.style.display = "grid";
+}
+//consultar mensajes de un chat
+function historial(correo){
+    $.ajax({
+            type: 'POST',
+            url: 'Procesos/historialMensajes.php',
+            data: { Correo: correo },
+            success: function(response) {
+                $("#PantallaMessages").html(response);
+            }
+    });
+}
 
+//funcion para enviar un mensaje
+function hacerenvio(remitente, destinatario){
+    var mensaje = $("#contenidoMessage").val();
 
-<script>
-let vistaprincipal = document.getElementById("Principal");
+    if ($("#contenidoMessage").val() == ""){
+      alert("escribe un mensaje");
+    } else {
+
+      $.ajax({
+        type: 'POST',
+        url: 'Procesos/insertmessage.php',
+        data: { r: remitente, d: destinatario, m: mensaje },
+        success: function(response) {
+          $.ajax({
+              type: 'POST',
+              url: 'Procesos/historialMensajes.php',
+              data: { Correo: destinatario },
+              success: function(datouser) {
+                $("#PantallaMessages").html(datouser);
+              }
+          });
+        }
+      });
+
+    }
+  }
+
 let vistafirst = document.getElementById("First");
 
   $(document).ready(function() {
-
+//script para actualizar la contraseña
       $("#changePsw").click(function() {
 
         if ($("#ContrasenActual").val() == "") {

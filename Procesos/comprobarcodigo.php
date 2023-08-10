@@ -1,5 +1,5 @@
 <?php
-/*Estilos a aplicar*/
+/*Estilos*/
 $classForm = '
 	height: 100%;
 	width: 100%;
@@ -9,12 +9,13 @@ $classForm = '
 	flex-direction: column;
 	text-align: center;
 ';
-/*Script para ir a cambiar contraseña*/
+
+/*Js para continuar con el formulario para cambiar contraseña*/
 $scriptjs = "
 <script type='text/javascript'>
 $(document).ready(function() {
 
-    $('#finished').click(function() {
+    $('#finish').click(function() {
         var property = $('#userproperty').val();
         var newpsw = $('#newpsw').val();
         var renewpsw = $('#renewpsw').val();
@@ -28,10 +29,9 @@ $(document).ready(function() {
         } else {
             $.ajax({
                 type: 'POST',
-                url: 'Procesos/lastRecuperarPsw.php', // Archivo PHP para procesar los datos en el servidor
-                data: {user: property, new: newpsw}, // Se envia el dato
+                url: 'Procesos/lastRecuperarPsw.php',
+                data: {user: property, new: newpsw},
                 success: function(response) {
-                // Manejar la respuesta del servidor aquí
                     if (response == 2) {
                         alert('Error');
                     } else if (response == 1) {
@@ -50,34 +50,20 @@ $(document).ready(function() {
 ?>
 
 <?php
+session_start();
 include('conexion.php');
-include('funciones.php');
 
-/*Recibimos el usuario*/
-$id1 = $_POST['p1'];
-$respuesta1 = $_POST['r1'];
+$codigo = $_POST['codigo']; //traemos el codigo recibido en el input
+$codigoenv = $_SESSION['codigo']; //traemos el codigo creado
 
-/*Traemos la pregunta 1 y su respuesta*/
-$comprobar1 = comprobarespuestas($id1);
-$transformacionrr1 = strtoupper($comprobar1['respuesta']);
-$transformacionre1 = strtoupper($respuesta1);
-
-/*Traemos la pregunta 2 y su respuesta*/
-$id2 = $_POST['p2'];
-$respuesta2 = $_POST['r2'];
-
-$comprobar2 = comprobarespuestas($id2);
-$transformacionrr2 = strtoupper($comprobar2['respuesta']);
-$transformacionre2 = strtoupper($respuesta2);
-
-/*Si las respuestas a las preguntas son las mismas*/
-if ($transformacionre1 == $transformacionrr1 AND $transformacionre2 == $transformacionrr2) {
+if ($codigo == $codigoenv) {
+    /*Formulario para cambiar contraseña*/
 	$response = '
 	<div style="'.$classForm.'">
-	    <input type="text" class="form-control" id="userproperty" value="'.$comprobar2['usuario'].'" style="display: none;">
+	    <input type="text" class="form-control" id="userproperty" value="'.$_SESSION['property'].'" style="display: none;">
 	    <input type="text" class="form-control mb-2" id="newpsw" placeholder="Ingrese una nueva Contraseña">
 	    <input type="text" class="form-control mb-3" id="renewpsw" placeholder="Confirme la nueva Contraseña">
-	    <button type="button" class="BotonForm p-2 pe-4 ps-4" id="finished">Cambiar Contraseña</button>
+	    <button type="button" class="BotonForm p-2 pe-4 ps-4" id="finish">Cambiar Contraseña</button>
 	</div>
     '.$scriptjs.'
 	';
