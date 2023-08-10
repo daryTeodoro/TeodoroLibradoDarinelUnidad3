@@ -1,3 +1,26 @@
+<?php
+include('Procesos/conexion.php');
+include('Procesos/funciones.php');
+session_start();
+if(!empty($_SESSION['UsuarioActivo'])){
+  $verol = loguear($_SESSION['UsuarioActivo']);
+
+  if ($verol['rol'] == 1){
+    echo"<script>
+      window.location.href = 'inicioDirector.php';
+    </script>";
+  } else if ($verol['rol'] == 2){
+    echo"<script>
+      window.location.href = 'inicioEnfermero.php';
+    </script>";
+  } else if ($verol['rol'] == 3){
+    echo"<script>
+      window.location.href = 'inicioPaciente.php';
+    </script>";
+  }
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
