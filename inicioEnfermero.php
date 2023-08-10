@@ -2,9 +2,26 @@
 session_start();
 include('Procesos/conexion.php');
 include('Procesos/funciones.php');
+//informacion de la cuenta activa
 $UsuarioActivo = $_SESSION['UsuarioActivo'];
 $datosUsuarioActivo = loguear($UsuarioActivo);
 $_SESSION['IdUsuarioActivo'] = $datosUsuarioActivo['id'];
+
+if(empty($_SESSION['UsuarioActivo'])){
+  echo"<script>
+    window.location.href = 'index.php';
+  </script>";
+} else {
+  if ($datosUsuarioActivo['rol'] == 1){
+    echo"<script>
+      window.location.href = 'inicioDirector.php';
+    </script>";
+  } else if ($datosUsuarioActivo['rol'] == 3){
+    echo"<script>
+      window.location.href = 'inicioPaciente.php';
+    </script>";
+  }
+}
 
 if($datosUsuarioActivo['visita'] == 1){
   echo"<style>
@@ -32,6 +49,7 @@ if($datosUsuarioActivo['visita'] == 1){
   </style>";
 }
 ?>
+  
 <!doctype html>
 <html lang="en">
   <head>
