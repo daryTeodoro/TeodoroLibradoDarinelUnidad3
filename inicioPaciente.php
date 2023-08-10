@@ -2,11 +2,31 @@
 session_start();
 include('Procesos/conexion.php');
 include('Procesos/funciones.php');
+//informacion del usuario logueado
 $UsuarioActivo = $_SESSION['UsuarioActivo'];
 $datosUsuarioActivo = loguear($UsuarioActivo);
 $_SESSION['IdUsuarioActivo'] = $datosUsuarioActivo['id'];
 
-if($datosUsuarioActivo['visita'] == 1){
+if(empty($_SESSION['UsuarioActivo'])){
+  echo"<script>
+    window.location.href = 'index.php';
+  </script>";
+} else {
+  $verol = loguear($_SESSION['UsuarioActivo']);
+
+  if ($verol['rol'] == 1){
+    echo"<script>
+      window.location.href = 'inicioDirector.php';
+    </script>";
+  } else if ($verol['rol'] == 2){
+    echo"<script>
+      window.location.href = 'inicioEnfermero.php';
+    </script>";
+  }
+}
+
+//checa el numero de visitas
+if($datosUsuarioActivo['visita'] == 1){ //Si es la primera vez
   echo"<style>
   #Principal{
     display: none;
@@ -22,7 +42,7 @@ if($datosUsuarioActivo['visita'] == 1){
     width: 70%;
   }
   </style>";
-} else if ($datosUsuarioActivo['visita'] != 1) {
+} else if ($datosUsuarioActivo['visita'] != 1) { //Si no es la primera vez
   echo"<style>
   #Principal{
     display: grid;
@@ -32,6 +52,7 @@ if($datosUsuarioActivo['visita'] == 1){
   </style>";
 }
 ?>
+  
 <!doctype html>
 <html lang="en">
   <head>
