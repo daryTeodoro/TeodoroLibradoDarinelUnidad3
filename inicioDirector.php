@@ -2,10 +2,30 @@
 session_start();
 include('Procesos/conexion.php');
 include('Procesos/funciones.php');
+/*Variables de la sesion*/
 $UsuarioActivo = $_SESSION['UsuarioActivo'];
 $datosUsuarioActivo = loguear($UsuarioActivo);
 $_SESSION['IdUsuarioActivo'] = $datosUsuarioActivo['id'];
+
+if(empty($_SESSION['UsuarioActivo'])){
+  echo"<script>
+    window.location.href = 'index.php';
+  </script>";
+} else {
+  $verol = loguear($_SESSION['UsuarioActivo']);
+
+  if ($verol['rol'] == 2){
+    echo"<script>
+      window.location.href = 'inicioEnfermero.php';
+    </script>";
+  } else if ($verol['rol'] == 3){
+    echo"<script>
+      window.location.href = 'inicioPaciente.php';
+    </script>";
+  }
+}
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
